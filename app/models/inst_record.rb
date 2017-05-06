@@ -1,0 +1,2 @@
+class InstRecord < ApplicationRecord
+end

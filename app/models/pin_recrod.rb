@@ -1,0 +1,2 @@
+class PinRecrod < ApplicationRecord
+end

@@ -1,0 +1,27 @@
+.container
+  .col-sm-12
+    %h1 Pinterset Followers
+  .col-sm-4
+    .form-group
+      %label{for: "account"} Select account:
+      %select.form-control#account
+        %option{value: 'Wild', selected: 'selected'} TheWildTattoo
+        %option{value: 'Sweet'} SweetyTextMessages
+        %option{value: 'Hair'} TheHairStyleDaily
+  .col-sm-12
+    .btn.btn-primary#parse Parse Followes/Following
+    .btn.btn-danger#remove{style: "display: none;"} Remove batards
+.container
+  .col-sm-3
+    %h2 Followers
+    .followers-list
+  .col-sm-3
+    %h2 Following
+    .following-list
+  .col-sm-3
+    %h2 Bastards
+    .bastards-list
+  .col-sm-3
+    %h2 Safe zone
+    .save-bastards-list
+
