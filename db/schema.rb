@@ -20,7 +20,7 @@ ActiveRecord::Schema.define(version: 20170505164818) do
     t.datetime "updated_at",   null: false
   end
 
-  create_table "pin_recrods", force: :cascade do |t|
+  create_table "pin_records", force: :cascade do |t|
     t.string   "account_name"
     t.text     "followers"
     t.text     "followings"

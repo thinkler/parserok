@@ -24,6 +24,7 @@ gem 'haml'
 gem 'bootstrap-sass'
 gem 'multi-select-rails'
 gem 'clipboard-rails'
+gem 'faraday'
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'

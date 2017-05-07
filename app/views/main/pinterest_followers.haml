@@ -3,14 +3,13 @@
     %h1 Pinterset Followers
   .col-sm-4
     .form-group
-      %label{for: "account"} Select account:
-      %select.form-control#account
-        %option{value: 'Wild', selected: 'selected'} TheWildTattoo
-        %option{value: 'Sweet'} SweetyTextMessages
-        %option{value: 'Hair'} TheHairStyleDaily
+      = form_tag do
+        = select_tag :account, options_for_select(PinRecord::ACCOUNTS), class: 'form-control'
+        %br/
+        = submit_tag "Parse Followers/Following", class: 'btn btn btn-primary'
   .col-sm-12
     .btn.btn-default#show Show FollLists
-    .btn.btn-primary#parse Parse Followes/Following
+    / .btn.btn-primary#parse Parse Followes/Following
     .btn.btn-danger#remove{style: "display: none;"} Remove batards
 .container
   .col-sm-6

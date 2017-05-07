@@ -1,14 +1,15 @@
 .container
   %h1 Picture Links Parser
+  %h5 Avalible: Instagram
 
 .container
   .col-sm-6
     = form_tag do
-      = text_area_tag :dirty_urls, "", class: 'form-control', size: '100x20'
+      = text_area_tag :dirty_urls, "", class: 'form-control', size: '100x15'
       %br/
       = submit_tag "Process", class: 'btn btn-primary'
 
   .col-sm-6
-    %textarea#clear-links.form-control{"rows" => 20}= @clear_links
+    %textarea#clear-links.form-control{"rows" => 15}= @clear_links
     %br/
     .btn.btn-primary.clipboard{"data-clipboard-action" => "copy", "data-clipboard-target" => "#clear-links"} Copy To Clipboard

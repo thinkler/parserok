@@ -2,3 +2,13 @@
   %h1 Index
   %p
     Readme HERE
+
+  .col-sm-4
+    - @data[:followers].each do |item|
+      %p=item
+  .col-sm-4
+    - @data[:following].each do |item|
+      %p=item
+  .col-sm-4
+    - @data[:bastards].each do |item|
+      %p=item

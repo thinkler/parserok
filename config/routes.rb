@@ -6,4 +6,5 @@ Rails.application.routes.draw do
   get '/followers', to: 'main#pinterest_followers', as: 'followers'
 
   post '/parser', to: 'main#parse_dirty_links'
+  post '/followers', to: 'main#parse_followers'
 end

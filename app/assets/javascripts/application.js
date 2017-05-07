@@ -38,6 +38,8 @@ function setUrls(account) {
   followingUrl = "https://api.pinterest.com/v1/me/following/users/?access_token=" + token + "&limit=100";
 }
 
+// Faraday.get "https://api.pinterest.com/v1/me/followers/?access_token=Af1TaYudagla5TYwigWONK1IFX7QFLv5lps5Qf5D-idtVqAzHAAAAAA&fields=url&limit=100"
+
 function clearCache() {
   fsUsers = [];
   fingUsers = [];
