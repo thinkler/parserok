@@ -148,6 +148,13 @@ $( document ).ready(function() {
     $(".safe-bastards-list").append('<div><span class="bast"> ' + this.innerText + ' </span></div>');
   })
 
+  $('#show').click(function() {
+    $(".foll-lists").toggle();
+  });
+
+
+  $('#my-sel').multiSelect()
+
   var clipboard = new Clipboard('.clipboard');
 });
 

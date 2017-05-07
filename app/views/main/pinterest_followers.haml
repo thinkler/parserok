@@ -9,19 +9,26 @@
         %option{value: 'Sweet'} SweetyTextMessages
         %option{value: 'Hair'} TheHairStyleDaily
   .col-sm-12
+    .btn.btn-default#show Show FollLists
     .btn.btn-primary#parse Parse Followes/Following
     .btn.btn-danger#remove{style: "display: none;"} Remove batards
 .container
-  .col-sm-3
-    %h2 Followers
-    .followers-list
-  .col-sm-3
-    %h2 Following
-    .following-list
-  .col-sm-3
+  .col-sm-6
     %h2 Bastards
     .bastards-list
-  .col-sm-3
+  .col-sm-6
     %h2 Safe zone
     .save-bastards-list
 
+    %select#my-sel{:multiple => 'miltiple', :name => "my-sel[]"}
+      %option{:value => "el1"} El1
+      %option{:value => "el2"} El2
+
+
+.container.foll-lists{style: "display: none;"}
+  .col-sm-6
+    %h2 Followers
+    .followers-list
+  .col-sm-6
+    %h2 Following
+    .following-list
