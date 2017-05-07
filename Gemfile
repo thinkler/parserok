@@ -22,6 +22,8 @@ gem 'coffee-rails', '~> 4.2'
 # gem 'therubyracer', platforms: :ruby
 gem 'haml'
 gem 'bootstrap-sass'
+gem 'multi-select-rails'
+gem 'clipboard-rails'
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'

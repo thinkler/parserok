@@ -5,12 +5,12 @@ class MainController < ApplicationController
 
   def index; end
 
-  def instagram_parser ; end
+  def instagram_parser; end
 
   def pinterest_followers; end
 
   def parse_dirty_links
-    @clear_links = parse_urls(params[:dirty_urls])
+    @clear_links = parse_urls(params[:dirty_urls]).join("\n")
     render 'main/instagram_parser'
   end
 

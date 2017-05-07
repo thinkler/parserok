@@ -12,10 +12,14 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require multi-select
 //= require_tree .
+//= require clipboard
 
-
-// REFACTOR AJAX FUNCTIONS
+// TODOLIST:
+// Refactor ajax functions
+// Inegrate multi-select
+// Find a way to save the safe-bastards
 
 const avalible_tokens = { 'Wild': 'ASKIatDc2KHFm-8D_6ZYTMv68a85FLv7CxrMVuBD9uZkCYArLAAAAAA',
                           'Sweet': 'Af1TaYudagla5TYwigWONK1IFX7QFLv5lps5Qf5D-idtVqAzHAAAAAA',
@@ -144,6 +148,7 @@ $( document ).ready(function() {
     $(".safe-bastards-list").append('<div><span class="bast"> ' + this.innerText + ' </span></div>');
   })
 
+  var clipboard = new Clipboard('.clipboard');
 });
 
 
