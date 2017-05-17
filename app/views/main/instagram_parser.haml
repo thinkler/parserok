@@ -1,6 +1,6 @@
 .container
   %h1 Picture Links Parser
-  %h5 Avalible: Instagram
+  %h5 Avalible: Instagram, LookBook
 
 .container
   .col-sm-6
@@ -12,4 +12,4 @@
   .col-sm-6
     %textarea#clear-links.form-control{"rows" => 15}= @clear_links
     %br/
-    .btn.btn-primary.clipboard{"data-clipboard-action" => "copy", "data-clipboard-target" => "#clear-links"} Copy To Clipboard
+    .btn.btn-primary.links-clipboard{"data-clipboard-action" => "copy", "data-clipboard-target" => "#clear-links"} Copy To Clipboard

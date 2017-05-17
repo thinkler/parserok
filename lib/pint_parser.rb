@@ -11,29 +11,30 @@ module PintParser
     "hair": "Ae7GWbSWQBPIFGoUljDIAqPRYRKZFLv7psXrKX1D-ikzwyAsrAAAAAA"
   }
 
+  # https://api.pinterest.com/v1/me/following/users/some/?access_token=
+
   URL = "https://api.pinterest.com/v1/me/"
-  FOLLOWERS = 'followers/?access_token='
-  FOLLOWING = 'following/users/?access_token='
+  TOKEN = '/?access_token='
+  FOLLOWERS = 'followers' + TOKEN
+  FOLLOWING = 'following/users' + TOKEN
+  UNFOLLOW = 'following/users/'
   OPTIONS = '&fields=url&limit=100&'
 
-  def parse_follow(account)
-    @@token = ACCOUNTS_TOKENS[account.to_sym]
-    get_data
+  def parse_bastards
+    following - followers
+  end
+
+  def unfol_bastards(bastards)
+    del_request(bastards)
   end
 
   private
 
-  def get_data
-    followers = get_followers
-    following = get_following
-    { followers: followers, following: following, bastards: following - followers }
-  end
-
-  def get_followers
+  def followers
     get_urls(FOLLOWERS)
   end
 
-  def get_following
+  def following
     get_urls(FOLLOWING)
   end
 
@@ -41,7 +42,7 @@ module PintParser
     result = []
     cursor = ""
     loop do
-      response = make_request(type, cursor)
+      response = get_request(type, cursor)
       cursor = response[:next]
       result += get_users_urls(response[:data])
       break unless cursor
@@ -49,16 +50,26 @@ module PintParser
     return result
   end
 
-  def make_request(type, cursor)
-    response = Faraday.get(URL + type + @@token + OPTIONS + cursor)
+  def get_request(type, cursor)
+    response = Faraday.get(URL + type + ACCOUNTS_TOKENS[session[:account].to_sym] + OPTIONS + cursor)
     body = JSON.parse(response.body.gsub('=>', ':'))
     next_page = body["page"]["next"]
     data = body["data"]
     { data: data, next: next_page }
   end
 
+  def del_request(array)
+    array.each do |a|
+      Faraday.delete(URL + UNFOLLOW + get_username(a) + TOKEN + ACCOUNTS_TOKENS[session[:account].to_sym])
+    end
+  end
+
   def get_users_urls(data)
     data.inject([]) { |arr, hash| arr << hash["url"]}
+  end
+
+  def get_username(url)
+    url.split('/')[-1]
   end
 
 end

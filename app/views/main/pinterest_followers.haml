@@ -1,33 +1,22 @@
 .container
-  .col-sm-12
-    %h1 Pinterset Followers
   .col-sm-4
     .form-group
+      %h2 Select account:
       = form_tag do
-        = select_tag :account, options_for_select(PinRecord::ACCOUNTS), class: 'form-control'
+        = select_tag :account, options_for_select(session[:accounts]), class: 'form-control'
         %br/
-        = submit_tag "Parse Followers/Following", class: 'btn btn btn-primary'
-  .col-sm-12
-    .btn.btn-default#show Show FollLists
-    / .btn.btn-primary#parse Parse Followes/Following
-    .btn.btn-danger#remove{style: "display: none;"} Remove batards
-.container
-  .col-sm-6
-    %h2 Bastards
-    .bastards-list
-  .col-sm-6
-    %h2 Safe zone
-    .save-bastards-list
+        = submit_tag "Get Bastards", class: 'btn btn btn-primary'
+    -if @bastards
+      %h4 Bastards Links
+      - (@bastards - @safe_bastards).each do |b|
+        =link_to b, b, target: "_blank"
+  .col-sm-8
+    - if @bastards
+      %h2 Move to safe zone:
+      = form_tag action: :update_bastards do
+        = select_tag :safe_bastards, options_for_select(@bastards, @safe_bastards), multiple: true, id: 'save-bastards'
+        %br/
+        = submit_tag "Save batards", class: 'btn btn btn-success'
+      %br/
+      =link_to "Remove batards", unfollow_path(bastards: @bastards - @safe_bastards), :method => 'post', class: 'btn btn-danger', data: { confirm: 'Sure about that?'}
 
-    %select#my-sel{:multiple => 'miltiple', :name => "my-sel[]"}
-      %option{:value => "el1"} El1
-      %option{:value => "el2"} El2
-
-
-.container.foll-lists{style: "display: none;"}
-  .col-sm-6
-    %h2 Followers
-    .followers-list
-  .col-sm-6
-    %h2 Following
-    .following-list

@@ -16,146 +16,45 @@
 //= require_tree .
 //= require clipboard
 
-// TODOLIST:
-// Refactor ajax functions
-// Inegrate multi-select
-// Find a way to save the safe-bastards
-
-const avalible_tokens = { 'Wild': 'ASKIatDc2KHFm-8D_6ZYTMv68a85FLv7CxrMVuBD9uZkCYArLAAAAAA',
-                          'Sweet': 'Af1TaYudagla5TYwigWONK1IFX7QFLv5lps5Qf5D-idtVqAzHAAAAAA',
-                          'Hair': 'Ae7GWbSWQBPIFGoUljDIAqPRYRKZFLv7psXrKX1D-ikzwyAsrAAAAAA' };
-var token;
-var followersUrl;
-var followingUrl;
-var unsubUrl;
-var fsUsers = [];
-var fingUsers = [];
-var bastards = [];
-
-function setUrls(account) {
-  token = avalible_tokens[account];
-  followersUrl = "https://api.pinterest.com/v1/me/followers/?access_token=" + token + "&fields=url&limit=100";
-  followingUrl = "https://api.pinterest.com/v1/me/following/users/?access_token=" + token + "&limit=100";
-}
-
-// Faraday.get "https://api.pinterest.com/v1/me/followers/?access_token=Af1TaYudagla5TYwigWONK1IFX7QFLv5lps5Qf5D-idtVqAzHAAAAAA&fields=url&limit=100"
-
-function clearCache() {
-  fsUsers = [];
-  fingUsers = [];
-  bastards = [];
-  $('.followers-list').empty();
-  $('.following-list').empty();
-  $('.bastards-list').empty();
-}
-
-function getFsUsers(url) {
-  $.get({
-    dataType: 'json',
-    url: url,
-    async: false,
-    success: function(data) {
-      data['data'].forEach(function(item) {
-        fsUsers.push(item['url']);
-      })
-      getFsUsers(data['page']['next']);
-    }
-  });
-}
-
-function getFiUsers(url) {
-  $.get({
-    dataType: 'json',
-    url: url,
-    async: false,
-    success: function(data) {
-      data['data'].forEach(function(item) {
-        fingUsers.push(item['url']);
-      })
-      getFiUsers(data['page']['next']);
-    }
-  });
-}
-
-function unSubBastards() {
-  bastards.forEach(function(bas) {
-    $.ajax({
-      url: unsubUrl,
-      type: 'DELETE',
-      async: false,
-      success: function() {
-        console.log(bas + ' - DONE!');
-      },
-      fail: function() {
-        console.log(bas + ' - ERR!');
-      }
-    });
-  });
-}
-
-function parseUsers() {
-  getFsUsers(followersUrl);
-  getFiUsers(followingUrl);
-  calculateBastards();
-  visualiseResults();
-}
-
-// Refactor dis
-function visualiseResults() {
-  fsUsers.forEach(function(us) {
-    $('.followers-list').append('<div>' + us + '</div>');
-  });
-  fingUsers.forEach(function(us) {
-    $('.following-list').append('<div>' + us + '</div>');
-  });
-  bastards.forEach(function(us) {
-    $('.bastards-list').append('<div><span class="bast"> ' + us + ' </span></div>');
-  });
-}
-
-function calculateBastards() {
-  fingUsers.forEach(function(user) {
-    if (fsUsers.indexOf(user) < 0) {
-      bastards.push(user.split('/')[3]);
-    }
-  })
-}
-
-function getFinalBastards() {
-  var finalBastards = [];
-  $(".bastards-list").find('.bast').each(function() {
-    finalBastards.push(this.innerText);
-  });
-  return finalBastards;
-}
 
 // Enter here
 
 $( document ).ready(function() {
-  $("#parse").click(function() {
-    setUrls($('#account').val());
-    $('#remove').show();
-    clearCache();
-    parseUsers();
-  });
+  $('#save-bastards').multiSelect({
+    selectableHeader: "<input type='text' class='search-input form-control' autocomplete='on' >",
+    selectionHeader: "<input type='text' class='search-input form-control' autocomplete='on' >",
+    afterInit: function(ms){
+      var that = this,
+          $selectableSearch = that.$selectableUl.prev(),
+          $selectionSearch = that.$selectionUl.prev(),
+          selectableSearchString = '#'+that.$container.attr('id')+' .ms-elem-selectable:not(.ms-selected)',
+          selectionSearchString = '#'+that.$container.attr('id')+' .ms-elem-selection.ms-selected';
 
-  $("#remove").click(function() {
-    if( ! confirm("Do you really want to do this?") ){
-      e.preventDefault();
+      that.qs1 = $selectableSearch.quicksearch(selectableSearchString)
+      .on('keydown', function(e){
+        if (e.which === 40){
+          that.$selectableUl.focus();
+          return false;
+        }
+      });
+
+      that.qs2 = $selectionSearch.quicksearch(selectionSearchString)
+      .on('keydown', function(e){
+        if (e.which == 40){
+          that.$selectionUl.focus();
+          return false;
+        }
+      });
+    },
+    afterSelect: function(){
+      this.qs1.cache();
+      this.qs2.cache();
+    },
+    afterDeselect: function(){
+      this.qs1.cache();
+      this.qs2.cache();
     }
-    unSubBastards(getFinalBastardsList());
   });
-
-  $(".bastards-list").on('click', '.bast', function() {
-    $(".safe-bastards-list").append('<div><span class="bast"> ' + this.innerText + ' </span></div>');
-  })
-
-  $('#show').click(function() {
-    $(".foll-lists").toggle();
-  });
-
-
-  $('#my-sel').multiSelect()
 
   var clipboard = new Clipboard('.clipboard');
 });

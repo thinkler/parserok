@@ -1,0 +1,14 @@
+.container
+  %h1 Titleize titles
+
+.container
+  .col-sm-6
+    = form_tag do
+      = text_area_tag :titles, "", class: 'form-control', size: '100x15'
+      %br/
+      = submit_tag "Process", class: 'btn btn-primary'
+
+  .col-sm-6
+    %textarea#pretty-titles.form-control{"rows" => 15}= @pretty_titles
+    %br/
+    .btn.btn-primary.clipboard{"data-clipboard-action" => "copy", "data-clipboard-target" => "#pretty-titles"} Copy To Clipboard
