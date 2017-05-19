@@ -27,6 +27,7 @@ module PicsParser
     http = Net::HTTP.new(url.host, url.port)
     http.use_ssl = (url.scheme == URL_SHCEME)
     response = http.request(req)
+    p response
     response.body.match(EXPRESSIONS[matcher])[0]
   end
 end
