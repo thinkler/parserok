@@ -33,14 +33,14 @@ class MainController < ApplicationController
   def parse_followers
     session[:account] = params[:account]
     pin_record = PinRecord.find_or_create_by(account: session[:account])
-    @safe_bastards = pin_record.get_bastards
+    @safe_bastards = pin_record.bastards_to_a
     @bastards = parse_bastards
     render 'main/pinterest_followers'
   end
 
   def update_bastards
     pin_record = PinRecord.find_by(account: session[:account])
-    pin_record.set_bastards(params[:safe_bastards])
+    pin_record.bastards_to_string(params[:safe_bastards])
     pin_record.save
     redirect_to pinterest_path
   end

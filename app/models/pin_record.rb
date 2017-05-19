@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 class PinRecord < ApplicationRecord
-  def bastards=(arr)
+  def bastards_to_string(arr)
     self.bastards = to_string(arr)
   end
 
-  def bastards
+  def bastards_to_a
     bastards ? bastards.split(' ') : []
   end
 

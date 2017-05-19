@@ -10,6 +10,7 @@ module PicsParser
     dirty_links = urls.split("\r\n")
     dirty_links.map do |link|
       matcher = select_matcher(link)
+      matcher = select_matcher(link)
       matcher ? get_response_body(matcher, link) : '0'
     end
   end
@@ -27,7 +28,6 @@ module PicsParser
     http = Net::HTTP.new(url.host, url.port)
     http.use_ssl = (url.scheme == URL_SHCEME)
     response = http.request(req)
-    p response
     response.body.match(EXPRESSIONS[matcher])[0]
   end
 end
