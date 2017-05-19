@@ -1,12 +1,10 @@
 module PicsParser
   EXPRESSIONS = {
-    instagram: %r/(?<=<meta property=\"og:image\" content=\")(.*)(?=\" \/>)/,
-    lookbook: %r/(?<=itemprop=\"contentURL\" src=\"\/\/)(.*)(?=\" srcset)/,
-    # pinterest: /(?<=<img src=\")(.*)(?=\" class=\"pinImage\" \/>)/ // TODO
-    # tumblr: some.slice(some.index("http://68.media.tumblr.com")..(some.index("\" ")-1)) // TODO
+    instagram: %r{(?<=<meta property=\"og:image\" content=\")(.*)(?=\" \/>)},
+    lookbook: %r{(?<=itemprop=\"contentURL\" src=\"\/\/)(.*)(?=\" srcset)}
   }.freeze
   URL_SHCEME = 'https'.freeze
-  AVALIBLE_SOURCES = %w('instagram' 'lookbook').freeze
+  AVALIBLE_SOURCES = %w(instagram lookbook).freeze
 
   def parse_urls(urls)
     dirty_links = urls.split("\r\n")
