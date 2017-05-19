@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+# Main controller
 class MainController < ApplicationController
   include PicsParser
   include PintParser
@@ -30,7 +32,8 @@ class MainController < ApplicationController
 
   def parse_followers
     session[:account] = params[:account]
-    @safe_bastards = PinRecord.find_or_create_by(account: session[:account]).get_bastards
+    pin_record = PinRecord.find_or_create_by(account: session[:account])
+    @safe_bastards = pin_record.get_bastards
     @bastards = parse_bastards
     render 'main/pinterest_followers'
   end
@@ -57,16 +60,13 @@ class MainController < ApplicationController
   def titleize(str)
     str.capitalize!
     words_no_cap = %w(a an the at by for in of on to up and as but or nor)
-    phrase = str.split(" ").map {|word|
-        if words_no_cap.include?(word)
-            word
-        else
-            word.capitalize
-        end
-    }.join(" ")
+    phrase = str.split(' ').map do |word|
+      if words_no_cap.include?(word)
+        word
+      else
+        word.capitalize
+      end
+    end.join(' ')
     phrase
   end
-
 end
-
-

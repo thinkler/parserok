@@ -12,6 +12,9 @@
 
 ActiveRecord::Schema.define(version: 20170514132244) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "delayed_jobs", force: :cascade do |t|
     t.integer  "priority",         default: 0, null: false
     t.integer  "attempts",         default: 0, null: false
@@ -27,7 +30,7 @@ ActiveRecord::Schema.define(version: 20170514132244) do
     t.string   "progress_stage"
     t.integer  "progress_current", default: 0
     t.integer  "progress_max",     default: 0
-    t.index ["priority", "run_at"], name: "delayed_jobs_priority"
+    t.index ["priority", "run_at"], name: "delayed_jobs_priority", using: :btree
   end
 
   create_table "images", force: :cascade do |t|
@@ -56,8 +59,8 @@ ActiveRecord::Schema.define(version: 20170514132244) do
     t.string   "last_sign_in_ip"
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
-    t.index ["email"], name: "index_users_on_email", unique: true
-    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+    t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
+    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   end
 
 end
