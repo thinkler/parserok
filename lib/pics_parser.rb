@@ -1,15 +1,15 @@
+# frozen_string_literal: true
 module PicsParser
   EXPRESSIONS = {
     instagram: %r{(?<=<meta property=\"og:image\" content=\")(.*)(?=\" \/>)},
     lookbook: %r{(?<=itemprop=\"contentURL\" src=\"\/\/)(.*)(?=\" srcset)}
   }.freeze
-  URL_SHCEME = 'https'.freeze
+  URL_SHCEME = 'https'
   AVALIBLE_SOURCES = %w(instagram lookbook).freeze
 
   def parse_urls(urls)
     dirty_links = urls.split("\r\n")
     dirty_links.map do |link|
-      matcher = select_matcher(link)
       matcher = select_matcher(link)
       matcher ? get_response_body(matcher, link) : '0'
     end

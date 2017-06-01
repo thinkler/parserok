@@ -1,0 +1,23 @@
+.container
+  %h1 Page Generator
+
+.container
+  .col-sm-12
+    = form_tag do
+      .col-sm-12
+        = select_tag :account, options_for_select(session[:page_accounts]), class: 'form-control'
+        %br/
+      .col-sm-6
+        = text_area_tag :titles, "", class: 'form-control', size: '100x15'
+      .col-sm-6
+        = text_area_tag :descriptions, "", class: 'form-control', size: '100x15'
+      %br/ 
+      = submit_tag "Process", class: 'btn btn-primary'
+
+%br/
+
+.container
+  .col-sm-12
+    %textarea#generated-page.form-control{"rows" => 15}= @generated_page
+    %br/
+    .btn.btn-primary.clipboard{"data-clipboard-action" => "copy", "data-clipboard-target" => "#generated-page"} Copy To Clipboard
