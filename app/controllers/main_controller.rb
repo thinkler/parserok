@@ -12,7 +12,7 @@ class MainController < ApplicationController
   def titleizer; end
 
   def page_generator
-    session[:page_accounts] = PAGE_ACCOUNTS  
+    session[:page_accounts] = PAGE_ACCOUNTS
   end
 
   # PAGE GENERATPOR
@@ -68,18 +68,5 @@ class MainController < ApplicationController
   def perform_titles(titles)
     titles_array = titles.split("\r\n")
     titles_array.map { |ta| titleize(ta) }
-  end
-
-  def titleize(str)
-    str.capitalize!
-    words_no_cap = %w(a an the at by for in of on to up and as but or nor)
-    phrase = str.split(' ').map do |word|
-      if words_no_cap.include?(word)
-        word
-      else
-        word.capitalize
-      end
-    end.join(' ')
-    phrase
   end
 end

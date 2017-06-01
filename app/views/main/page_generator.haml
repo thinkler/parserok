@@ -5,7 +5,7 @@
   .col-sm-12
     = form_tag do
       .col-sm-12
-        = select_tag :account, options_for_select(session[:page_accounts]), class: 'form-control'
+        = select_tag :page_account, options_for_select(session[:page_accounts]), class: 'form-control'
         %br/
       .col-sm-6
         = text_area_tag :titles, "", class: 'form-control', size: '100x15'
