@@ -1,33 +1,32 @@
 # frozen_string_literal: true
 module PicsParser
-  EXPRESSIONS = {
-    instagram: %r{(?<=<meta property=\"og:image\" content=\")(.*)(?=\" \/>)},
-    lookbook: %r{(?<=itemprop=\"contentURL\" src=\"\/\/)(.*)(?=\" srcset)}
-  }.freeze
-  URL_SHCEME = 'https'
-  AVALIBLE_SOURCES = %w(instagram lookbook).freeze
+  AVALIBLE_SOURCES = %w(instagram lookbook pinterest).freeze
 
   def parse_urls(urls)
     dirty_links = urls.split("\r\n")
     dirty_links.map do |link|
-      matcher = select_matcher(link)
-      matcher ? get_response_body(matcher, link) : '0'
+      select_source(link)
     end
   end
 
   private
 
-  def select_matcher(link)
-    return :instagram if link.index(AVALIBLE_SOURCES[0])
-    return :lookbook if link.index(AVALIBLE_SOURCES[1])
+  def select_source(link)
+    page = Nokogiri::HTML(open(link))
+    return instagram_url(page) if link.index(AVALIBLE_SOURCES[0])
+    return lookbook_url(page) if link.index(AVALIBLE_SOURCES[1])
+    return pinterest_url(page) if link.index(AVALIBLE_SOURCES[2])
   end
 
-  def get_response_body(matcher, link)
-    url = URI.parse(link.to_s)
-    req = Net::HTTP::Get.new(url.request_uri)
-    http = Net::HTTP.new(url.host, url.port)
-    http.use_ssl = (url.scheme == URL_SHCEME)
-    response = http.request(req)
-    response.body.match(EXPRESSIONS[matcher])[0]
+  def instagram_url(page)
+    page.at_css('[property="og:image"]').attributes['content'].value
+  end
+
+  def lookbook_url(page)
+    page.at_css('[class="unselectable"]').attr('src')[2..-1]
+  end
+
+  def pinterest_url(page)
+    page.at_css('img').attributes['src'].value
   end
 end

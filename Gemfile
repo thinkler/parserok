@@ -28,7 +28,7 @@ gem 'clipboard-rails'
 gem 'faraday'
 gem 'paperclip'
 gem 'devise'
-
+gem 'nokogiri'
 gem 'delayed_job_active_record'
 gem 'progress_job'
 
