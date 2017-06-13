@@ -11,7 +11,7 @@
 
   <body>
     <div class="container">
-      <nav class="navbar navbar-inverse">
+      <nav class="navbar navbar-default">
         <div class="navbar-header">
           <a href="/" class="navbar-brand">Parserok</a>
         </div>
@@ -19,9 +19,6 @@
           <li class="<%= 'active' if current_page?(parser_path) %>"><a href="/parser">Parser</a></li>
           <li class="<%= 'active' if current_page?(followers_path) %>"><a href="/followers">Followers</a></li>
           <li class="<%= 'active' if current_page?(titleizer_path) %>"><a href="/titleizer">Titleizer</a></li>
-          <li class="<%= 'active' if current_page?(page_generator_path) %>"><a href="/page_generator">Page Generator</a></li>
-        </ul>
-        <ul class="nav navbar-nav navbar-right">
           <% if user_signed_in? %>
             <li><%= link_to('Logout', destroy_user_session_path, :method => :delete) %></li>
           <% end %>

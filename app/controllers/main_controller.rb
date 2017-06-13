@@ -15,14 +15,6 @@ class MainController < ApplicationController
     session[:page_accounts] = PAGE_ACCOUNTS
   end
 
-  # PAGE GENERATPOR
-
-  def generate_page
-    session[:page_account] = params[:page_account]
-    @generated_page = create_page(params[:titles], params[:descriptions])
-    render 'main/page_generator'
-  end
-
   # TITLES
 
   def capitalize_titles
