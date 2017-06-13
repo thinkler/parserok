@@ -3,17 +3,12 @@
 class MainController < ApplicationController
   include PicsParser
   include PintParser
-  include PageGenerator
 
   def index; end
 
   def instagram_parser; end
 
   def titleizer; end
-
-  def page_generator
-    session[:page_accounts] = PAGE_ACCOUNTS
-  end
 
   # TITLES
 
